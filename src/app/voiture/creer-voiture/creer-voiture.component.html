@@ -1,0 +1,32 @@
+<button (click)="onClick()" class="btn btn-primary">
+  Nouvelle voiture
+</button>
+<div [hidden]="cache">
+  <h3>Nouvelle voiture</h3>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="name">Marque</label>
+            <input type="text" class="form-control" id="marque" required [(ngModel)]="newVoiture.marque" name="marque">
+        </div>
+        <div class="form-group">
+            <label for="name">Modele</label>
+            <input type="text" class="form-control" id="modele" required [(ngModel)]="newVoiture.model" name="modele">
+        </div>
+        <div class="form-group">
+            <label for="name">Description</label>
+            <input type="text" class="form-control" id="description" required [(ngModel)]="newVoiture.description" name="description">
+        </div>
+        <div class="form-group">
+            <label for="name">Nombre de portes</label>
+            <input type="number" class="form-control" id="nbre_porte" required [(ngModel)]="newVoiture.nbre_porte" name="nbre_porte">
+        </div>
+        <div class="form-group">
+            <label for="name">Prix/j</label>
+            <input type="number" class="form-control" id="prix_jour" required [(ngModel)]="newVoiture.prix_jour" name="prix_jour">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+
+
+

@@ -1,0 +1,32 @@
+<div class="row">
+  <div id="" class="col-lg-2">
+    <span>Choisissez un modèle.</span><br>
+    <button class="btn btn-info modele">Dacia</button><br>
+    <button class="btn btn-info modele">Ford</button><br>
+    <button class="btn btn-info modele">BMW</button><br>
+    <button class="btn btn-info modele">Toyota</button><br>
+    <button class="btn btn-info modele">Megane</button><br>
+    <button class="btn btn-info modele">Chevrolet</button>
+  </div>
+  <div class="col-lg-10">
+    <img src="../../../assets/voiture1.jpg" alt="photo" width="455px" style="margin-right: 10px;" >
+    <img src="../../../assets/voiture2.jpg" alt="photo" width="455px"  >
+  </div>
+</div>
+<section  *ngFor="let voiture of listVoitures | async ; index as id_voiture">
+  <div class="voiture">
+    <p><img src="../../../assets/{{ voiture.image1 }}.jpg" alt="photo" width="170px" style="margin-left: 17px;"></p>
+        Marque: {{ voiture.marque }}<br/>
+        Modele: {{ voiture.model }}<br/>
+        Prix/j: {{ voiture.prix_jour }}<br/>
+        <span *ngIf=" voiture.stock >= 1">
+          <button class="btn btn-success"  [routerLink]="['/reservation', voiture.id_voiture]" routerLinkActive="router-link-active" >
+            Reservation</button>
+        </span>
+        <span *ngIf=" voiture.stock == 0">
+          <button  disabled class="btn btn-warning" title='Stock indisponible'  >
+            Reservation</button>
+        </span>
+  </div>
+</section>
+<!-- <app-creer-voiture></app-creer-voiture> -->
