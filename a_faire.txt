@@ -1,3 +1,4 @@
 --Completer une colonne état dans la table réservation qui permettra à l'admin de suivre
 les réservations des clients
---
+--Parmi les images d'une voiture il y'aura le logo pour les modèles et à l'ajout on aura 
+une liste de logo qu'on peut selectionner

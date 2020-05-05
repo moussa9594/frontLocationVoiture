@@ -1,0 +1,15 @@
+#bienvenu{
+  color: white;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+.login{
+margin-left: 850px;
+}
+.header{
+  position: fixed;
+  width: 1400px;
+  Z-index: 999;
+  margin-top: -20px;
+}

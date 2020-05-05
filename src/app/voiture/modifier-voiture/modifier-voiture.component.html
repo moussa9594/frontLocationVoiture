@@ -1,0 +1,93 @@
+<div *ngIf="modifierVoiture"  style="margin-top: 20px;" >
+  <form (ngSubmit)="onSubmit()">
+    <p-panel header="Modification des caractéristiques">
+      <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" [hidden]="showCarac" style="margin: 10px 0px">
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Marque:
+          </div>
+          <div class="ui-grid-col-6">
+            <p-dropdown [options]="marques" name="marque" placeholder="Modèle de la voiture"
+              placeholder="Marque de la voiture" required [(ngModel)]="modifierVoiture.marque"></p-dropdown>
+          </div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Modèle:
+          </div>
+          <div class="ui-grid-col-6">
+            <p-dropdown [options]="modeles" name="modele" required [(ngModel)]="modifierVoiture.model"
+              placeholder="Modèle de la voiture"></p-dropdown>
+          </div>
+        </div>
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Nombre de portes:
+          </div>
+          <div class="ui-grid-col-6">
+            <p-dropdown [options]="nbre_portes" name="nbre_porte" placeholder="Nombres de portes de la voiture" required
+              [(ngModel)]="modifierVoiture.nbre_porte"></p-dropdown>
+          </div>
+        </div>
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Prix par jour:
+          </div>
+          <div class="ui-grid-col-6 ui-inputgroup">
+            <span class="ui-inputgroup-addon">FCFA</span>
+            <input type="number" name="prix_jour" required placeholder="prix par jour" [(ngModel)]="modifierVoiture.prix_jour">
+          </div>
+        </div>
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Stock:
+          </div>
+          <div class="ui-grid-col-6">
+            <input  name="stock" type="number" placeholder="Le nombre de voiture dans l'agence" required
+              [(ngModel)]="modifierVoiture.stock"/>
+          </div>
+        </div>
+
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2">
+            Description:
+          </div>
+          <div class="ui-grid-col-6">
+            <textarea pInputTextarea name="description" placeholder="Description de la voiture" type="text" required
+              [(ngModel)]="modifierVoiture.description"></textarea><br>
+              <button [hidden]="onValidForm()" (click)="showCarac = true; showImages = false">Cliquez ici pour changer les images</button>
+          </div>
+          <div class="ui-grid-col-4"></div>
+        </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-2"></div>
+          <div class="ui-grid-col-6">
+            <button pButton type="submit" label="Submit" [disabled]="onValidForm()" ></button>
+          </div>
+          <div class="ui-grid-col-4"></div>
+        </div>
+      </div>
+      <div [hidden]="showImages" class="ui-grid-row">
+        <span class="ims"> <img class="im" src="../../../assets/{{ modifierVoiture.image1 }}" alt="image1" > <br>
+          <p-fileUpload name="image1"  (onSelect)="onSelectIm1($event)" chooseLabel="Image 1"
+           accept="image/*" maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false" >
+          </p-fileUpload>
+         </span>
+        <span class="ims"> <img class="im" src="../../../assets/{{ modifierVoiture.image2 }}" alt="image2" ><br>
+          <p-fileUpload name="image2"  (onSelect)="onSelectIm2($event)" chooseLabel="Image 2"
+           accept="image/*" maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false">
+          </p-fileUpload>
+        </span>
+        <span class="ims"> <img class="im" src="../../../assets/logos/{{ modifierVoiture.image3 }}" alt="image3" ><br>
+          <p-fileUpload name="image3"  (onSelect)="onSelectIm3($event)" chooseLabel="Logo"
+           accept="image/*" maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false">
+          </p-fileUpload>
+        </span><br>
+        <button pButton type="button" label="Appliquer" icon="pi pi-check" (click)="onClickAppliquer()"></button>
+      </div>
+    </p-panel>
+  </form>
+</div>

@@ -1,6 +1,13 @@
-<div class="container">
-<nav style="text-align: center;" class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <span id="bienvenu"> Bienvenue dans Location SALL&FRERE</span>
-  </nav>
-  <router-outlet></router-outlet>
+<div class="page-layout" >
+  <div class="page-content" >
+    <app-header [connecter]="connecter"
+                [icon]="icon"
+                [inscription]="inscription"
+                [stile]="stile"
+                >
+    </app-header>
+  </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
 </div>

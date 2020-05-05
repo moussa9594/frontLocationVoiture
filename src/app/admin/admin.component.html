@@ -1,0 +1,19 @@
+<div style="margin-bottom: 15px;">
+  <div class="links">
+    <a class="link" [routerLink]="['/admin']" routerLinkActive="router-link-active"
+      (click)="showClient = false; showReservation = false; showVoiture = true">
+      Gestion des voitures
+    </a> <i class="space">|</i>
+    <a class="link" [routerLink]="['/admin']" routerLinkActive="router-link-active"
+      (click)="showClient = false; showVoiture = false; showReservation = true">
+      Gestion des réservations
+    </a> <i class="space">|</i>
+    <a class="link" [routerLink]="['/admin']" routerLinkActive="router-link-active"
+      (click)="showVoiture = false; showReservation = false; showClient = true">
+      Activités clients <i class="pi pi-users"></i>
+    </a>
+  </div>
+  <app-gestion-voitures [showVoiture]="showVoiture"></app-gestion-voitures>
+  <app-gestion-reservations [showReservation]="showReservation"></app-gestion-reservations>
+  <app-activites-client [showClient]="showClient"></app-activites-client>
+</div>

@@ -1,0 +1,18 @@
+.link {
+font-weight: bold;
+font-size: 25px;
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.space{
+  margin-left: 35px;
+  margin-right: 35px;
+}
+.links{
+  margin-left: 250px;
+  margin-top: 80px;
+}
+.link:hover{
+  box-shadow:6px 6px 6px 6px;
+  text-decoration: none;
+}
+

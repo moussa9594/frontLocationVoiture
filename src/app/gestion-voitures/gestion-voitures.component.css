@@ -1,0 +1,64 @@
+.voiture{
+  margin: 20px;
+  border: 1px solid blue;
+  border-radius: 3px 3px 3px 3px;
+  width: 200px;
+  float: left;
+}
+.modele{
+  margin-bottom: 2px;
+  width: 100px;
+}
+.car-title{
+  font-weight: bold;
+  font-size: 12px;
+  display: inline-block;
+}
+.car-subtitle{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: inline-block;
+}
+.car-buttons{
+  margin-left: 50px;
+}
+.im{
+  border: 1px solid black;
+  border-radius: 10px 10px 0px 0px;
+  padding:10px ;
+}
+.def{
+  background-color:dimgray;
+  padding: 20px;
+}
+.choix{
+  background-color:cornflowerblue ;
+}
+.car-details{
+  margin-top: 15px;
+  display: inline-block;
+}
+.car-data{
+  border: 1px solid black;
+  border-radius: 0px 0px 20px 20px;
+  background-color: cadetblue;
+  width: 220px;
+  margin-left: 17px;
+}
+.tr {
+  font-weight: bold;
+}
+.ferme{
+  float: right;
+}
+
+
+.mod{
+  position: fixed;
+}
+.voitures{
+  margin-left: 340px;
+}
+#plus{
+  position: fixed;
+  margin-left: 1390px;
+  }

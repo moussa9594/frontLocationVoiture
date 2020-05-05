@@ -1,0 +1,15 @@
+.im {
+  width: "80px";
+  border-radius: 3px;
+  display: inline-block;
+}
+ p-fileUpload {
+display: inline-block;
+}
+span  {
+display: inline-block;
+}
+
+.ims {
+  margin-right: 60px;
+}

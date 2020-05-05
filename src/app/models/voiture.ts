@@ -6,6 +6,5 @@ export class Voiture {
   nbre_porte: number;
   description: string;
   prix_jour: number;
-  disponibilite: boolean;
   stock: number;
 }

@@ -1,13 +1,30 @@
 <section id="reserver" class="row">
-  <div id="voiture" class="col-lg-5" *ngFor="let item of voitureReserver">
-    <!-- <p style="margin-top: 70px;"><img src="../../../assets/{{ item.image1 }}.jpg" alt="photo" width="370px" style="margin-left: 17px;"></p> -->
-    <p style="margin-top: 70px;"><img src="{{ url }}" alt="gif" width="370px" style="margin-left: 17px;"></p>
-        Marque:  <span class="det">{{ item.marque  }}</span><br/>
-        Modele:  <span class="det">{{ item.model }}</span><br/>
-        Prix/j sans chaufeur:  <span class="det" style="color: red;">{{ item.prix_jour }} FCFA</span><br/>
-        Prix/j avec chaufeur: <span style="color: lightseagreen;">+ 5000 FCFA </span>
+  <div id="voiture" class="col-lg-5" *ngIf="voitureReserver">
+    <p style="margin-top: 70px;"><img src="../../../assets/{{ voitureReserver.image1 }}" alt="photo" width="370px"
+        style="margin-left: 17px;"></p>
+    <!-- <p style="margin-top: 70px;"><img src="{{ url }}" alt="gif" width="370px" style="margin-left: 17px;"></p> -->
+    Marque: <span class="det">{{ voitureReserver.marque  }}</span><br />
+    Modele: <span class="det">{{ voitureReserver.model }}, &nbsp; {{ voitureReserver.nbre_porte }} portes</span><br />
+    Description: <span class="det">{{ voitureReserver.description }}</span><br />
+    Prix/j sans chaufeur: <span class="det" style="color: red;">{{ voitureReserver.prix_jour }} FCFA</span><br />
+    Prix/j avec chaufeur: <span style="color: lightseagreen;">+ 5000 FCFA </span>
   </div>
-  <div  id="identification" class="col-lg-5">
+  <div id="identification" class="col-lg-5">
     <app-client></app-client>
   </div>
-  </section>
+</section>
+<p-carousel [value]="voitures" [numVisible]="4" [numScroll]="2" [circular]="true" [autoplayInterval]="2000"
+  [responsiveOptions]="responsiveOptions">
+  <ng-template let-car pTemplate="item">
+    <div class="car-details">
+      <div class="p-grid p-nogutter" style="margin-left: 15px;">
+        <div class="p-col-3">
+          <img class="im" src="../../../assets/{{ car.image1 }}" alt="photo" width="200px" style="margin-left: 17px;">
+        </div>
+        <div class="p-col-12 car-data">
+          <img src="../../../assets/logos/{{ car.image3 }}" alt="photo" width="40px" style="margin-left: 17px;">
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

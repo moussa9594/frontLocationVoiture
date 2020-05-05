@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceVoitureService } from 'src/app/voiture.service';
 import { ActivatedRoute } from '@angular/router';
 import { VoitureIms } from 'src/app/models/voitureIms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { GiphyService } from 'src/app/giphy.service';
+import { Voiture } from 'src/app/models/voiture';
+import { Client } from 'src/app/models/client';
 
 @Component({
   selector: 'app-reservation',
@@ -11,34 +13,62 @@ import { GiphyService } from 'src/app/giphy.service';
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent implements OnInit {
-  voitureReserver: Observable<VoitureIms[]>;
-  voiture: Array<VoitureIms>;
+  voitureAndImsSubscription: Subscription;
+  voituresAndImsSubscription: Subscription;
+  voitureReserver: VoitureIms;
+  clientSubscription: Subscription;
+  clientReserver: Client;
+  voitures: VoitureIms[];
   url: Observable<any[]>;
+  listVoitures: VoitureIms[];
   id_voiture: number;
+  responsiveOptions;
   constructor(private serviceVoiture: ServiceVoitureService,
-              public route: ActivatedRoute, private giphyService: GiphyService
+              public activeRoute: ActivatedRoute, private giphyService: GiphyService,
+              private voitureService: ServiceVoitureService
              ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      // tslint:disable-next-line: no-string-literal
-       // tslint:disable-next-line: radix
-       this.serviceVoiture.getVoitureIms(parseInt(params.get('id_voiture')))
-      .subscribe(
-        data => {
-          this.voitureReserver = data;
-          this.voiture = data;
-          this.id_voiture = data.id_voiture;
-          // tslint:disable-next-line: no-shadowed-variable
-          // console.log(this.voitureReserver[0].model);
-          this.giphyService.gif(this.voitureReserver[0].model).subscribe( data => this.url = data);
-        });
-
+    this.activeRoute.paramMap.subscribe(param => {
+        // tslint:disable-next-line: radix
+        this.id_voiture = parseInt( param.get('id_voiture') );
       });
-  }
 
-  getIdVoiture() {
-    return this.id_voiture;
+    this.responsiveOptions = [
+        {
+            breakpoint: '1024px',
+            numVisible: 3,
+            numScroll: 3
+        },
+        {
+            breakpoint: '768px',
+            numVisible: 2,
+            numScroll: 2
+        },
+        {
+            breakpoint: '560px',
+            numVisible: 1,
+            numScroll: 1
+        }
+    ];
+    // init liste voiture
+    this.getVoituresAndIms();
+    // init voiture reserver
+    this.voitureService.getVoitureAndIms(this.id_voiture);
+    this.voitureAndImsSubscription = this.voitureService.voitureAndImsSubject.subscribe(
+      (voiture: VoitureIms) => {
+        this.voitureReserver = voiture;
+      }
+    );
   }
+   // recupération des voitures avec leurs images
+   getVoituresAndIms() {
+    this.voitureService.getVoituresAndIms();
+    this.voituresAndImsSubscription = this.voitureService.voituresAndImsSubject.subscribe(
+      (voitures: VoitureIms[]) => {
+        this.voitures = voitures;
+      }
+    );
+   }
 
 }
