@@ -1,0 +1,101 @@
+<div class="row">
+  <!-- debut de l'affichage pour le choix des modeles -->
+  <div  class="col-lg-3">
+    <p-orderList  [value]="modeles" [listStyle]="{'height':'277px'}" header="Modèles" filter="filter"
+      filterBy="model" filterPlaceholder="Rechercher par modèle">
+      <ng-template let-car pTemplate="item">
+        <div class=" ui-helper-clearfix" (click)="getVoitureByModel(car[0])">
+          <img src="../../../assets/logos/{{car[1]}}" style="display:inline-block;margin:2px 0 2px 2px" width="40">
+          <div style="float:right;font-weight: bold;margin-top: 15px;">{{car[0]}}</div>
+        </div>
+      </ng-template>
+    </p-orderList>
+  </div>
+  <!-- fin de l'affichage pour lechoix des modeles -->
+
+  <!-- debut défilement des voitures dans le header -->
+  <div class="col-lg-9 def">
+    <p-carousel [value]="images" class="custom-carousel" [numVisible]="1" [numScroll]="1" [circular]="true"
+      [autoplayInterval]="3000">
+      <ng-template let-car pTemplate="item">
+        <div class="car-details">
+          <div class="p-grid p-nogutter">
+            <div class="col-lg-12">
+              <img src="../../../assets/{{car}}.jpg" alt="photo" width="455px" style="margin-left: 150px;">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
+  </div>
+  <!-- fin défilement des voitures dans le header -->
+</div>
+
+<!--Debut affichage des voitures par modele -->
+<p-carousel *ngIf="voituresByModel" [value]="voituresByModel" [numVisible]="3" [numScroll]="2" [circular]="false"
+  [responsiveOptions]="responsiveOptions">
+  <ng-template let-car pTemplate="item">
+    <div class="car-details">
+      <div class="p-grid p-nogutter">
+        <div class="p-col-3">
+          <img class="im" src="../../../assets/{{ car.image1 }}" alt="photo" width="220px" style="margin-left: 17px;"
+            (click)="onSelect(car)">
+        </div>
+        <div class="p-col-12 car-data">
+          <span>Modèle: <div class="car-title">{{car.model}}</div>
+            <img  src="../../../assets/logos/{{ car.image3 }}" alt="photo" width="30px">
+          </span><br>
+          <span >Marque: </span> <div class="car-subtitle">{{car.marque}}</div>
+          <div class="car-buttons">
+            <button type="button" pButton icon="pi pi-check" label="Reserver"
+              [disabled]="car.stock == 0 ? true : false"
+              [routerLink]="['/reservation', car.id_voiture]" routerLinkActive="router-link-active"
+              class="ui-button-success"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>
+<!-- fin affichage des voitures par marque -->
+<!-- comencement du caroussel liste des voitures -->
+<p-carousel [value]="listItems" [numVisible]="4" [numScroll]="2" [circular]="false" [hidden]="hideList"
+  [responsiveOptions]="responsiveOptions">
+  <ng-template let-car pTemplate="item">
+    <div class="car-details">
+      <div class="p-grid p-nogutter">
+        <div class="p-col-3">
+          <img class="im" src="../../../assets/{{ car.image1 }}" alt="photo" width="220px" style="margin-left: 17px;"
+            (click)="onSelect(car)">
+        </div>
+        <div class="p-col-12 car-data">
+          <span>Modèle: <div class="car-title">{{car.model}}</div>
+            <img  src="../../../assets/logos/{{ car.image3 }}" alt="photo" width="30px">
+          </span><br>
+          <span >Marque: </span> <div class="car-subtitle">{{car.marque}}</div>
+          <div class="car-buttons">
+            <button type="button" pButton icon="pi pi-check" label="Reserver"
+              [disabled]="car.stock == 0 ? true : false"
+              [routerLink]="['/reservation', car.id_voiture]" routerLinkActive="router-link-active"
+              class="ui-button-success"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>
+<!-- fin du caroussel liste des voitures-->
+<!-- affichage du détail d'une voiture -->
+<p-dialog [(visible)]="visibleDetail" (onHide)="detailsVoiture = null" *ngIf="detailsVoiture"
+  [header]="detailsVoiture.marque" [modal]="true" [style]="{width: '50vw', height: '20vw'}" [baseZIndex]="10000"
+  [draggable]="true" [resizable]="true">
+  <app-details-voiture [detailsVoiture]="detailsVoiture" [url]="url">
+  </app-details-voiture>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" label="Reserver"
+      [disabled]="detailsVoiture.stock == 0 ? true : false" [routerLink]="['/reservation', detailsVoiture.id_voiture]"
+      routerLinkActive="router-link-active" class="ui-button-success"></button>
+    <button class="fermer" type="button" pButton icon="pi pi-times" (click)="clickFermer()" label="fermer"
+      class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

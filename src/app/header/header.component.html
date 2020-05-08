@@ -1,0 +1,15 @@
+<div class="header">
+  <nav style="text-align: center;" class="navbar navbar-expand-sm bg-dark navbar-dark" style="margin-bottom: 20px;">
+    <span id="bienvenu"> Bienvenue dans Location SALL&FRERE</span>
+    <div class="login row">
+      <div class="col-md-8">
+        <button pButton type="button" [class]="stile" [label]="connecter" [icon]="icon" (click)="showDialog = true"
+          [routerLink]="['/login']" routerLinkActive="router-link-active"></button>
+      </div>
+      <div class="">
+        <a style="color: white;" [routerLink]="['/login', inscrire]"
+          routerLinkActive="router-link-active">{{ inscription }}</a>
+      </div>
+    </div>
+  </nav>
+</div>

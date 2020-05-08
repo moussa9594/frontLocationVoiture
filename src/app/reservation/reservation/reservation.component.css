@@ -1,0 +1,38 @@
+#reserver{
+  border: 2px solid blue;
+  border-radius: 10px 10px 10px 10px;
+  height: 500px;
+  margin-top: 70px;
+}
+#voiture{
+  margin-bottom: 20px;
+}
+
+#identification{
+  background-color: darkgreen;
+  border-radius: 35px 0px 35px 0px;
+  height: 460px;
+  margin-left: 30px;
+  margin-top: 20px;
+}
+
+label{
+  font-weight: bold;
+}
+h3{
+  font-weight: bold;
+  text-align: center;
+  text-decoration: underline;
+}
+.det{
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.im{
+  border: 1px solid black;
+  border-radius: 10px 10px 0px 0px;
+  padding:10px ;
+}
+.car-details{
+  margin-top: 15px;
+}

@@ -1,0 +1,29 @@
+<div class="connecter" [hidden]="!showLogin">
+  <form (ngSubmit)="onLogin()">
+    <div class="ui-g ui-fluid">
+      <div class="p-col p-col-align-center">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
+          <input  class="ipt" [(ngModel)]="adminLogin.username" name="username" id="username" type="text" pInputText
+            placeholder="Login ou email">
+        </div>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="p-col p-col-align-center">
+        <div class="ui-inputgroup">
+          <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
+          <input class="ipt" [(ngModel)]="adminLogin.password" name="password" id="password" type="password" pInputText
+            placeholder="mot de passe">
+        </div>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="p-col p-col-align-center">
+        <div class="ui-inputgroup">
+          <button pButton type="submit" label="Connexion" class="ui-button-rounded"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

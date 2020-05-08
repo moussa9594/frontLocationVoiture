@@ -1,0 +1,95 @@
+<button (click)="onClick()" class="btn btn-primary">
+  Nouvelle voiture
+</button>
+
+
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<form (ngSubmit)="onSubmit()">
+  <p-panel header="Validate">
+    <div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Marque:
+        </div>
+        <div class="ui-grid-col-6">
+          <p-dropdown [options]="marques" name="marque" placeholder="Modèle de la voiture"
+            placeholder="Marque de la voiture" required [(ngModel)]="newVoiture.marque"></p-dropdown>
+        </div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Modèle:
+        </div>
+        <div class="ui-grid-col-6">
+          <p-dropdown [options]="modeles" name="modele" required [(ngModel)]="newVoiture.model"
+            placeholder="Modèle de la voiture"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Nombre de portes:
+        </div>
+        <div class="ui-grid-col-6">
+          <p-dropdown [options]="nbre_portes" name="nbre_porte" placeholder="Nombres de portes de la voiture" required
+            [(ngModel)]="newVoiture.nbre_porte"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Prix par jour:
+        </div>
+        <div class="ui-grid-col-6 ui-inputgroup">
+          <span class="ui-inputgroup-addon">FCFA</span>
+          <input type="number" name="prix_jour" required placeholder="prix par jour" [(ngModel)]="newVoiture.prix_jour">
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Stock:
+        </div>
+        <div class="ui-grid-col-6">
+          <input  name="stock" type="number" placeholder="Le nombre de voiture dans l'agence" required
+            [(ngModel)]="newVoiture.stock"/>
+        </div>
+      </div>
+
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Description:
+        </div>
+        <div class="ui-grid-col-6">
+          <textarea pInputTextarea name="description" placeholder="Description de la voiture" type="text" required
+            [(ngModel)]="newVoiture.description"></textarea>
+        </div>
+        <div class="ui-grid-col-4"></div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2">
+          Selectionner deux images et une troisième pour le logo
+        </div>
+        <div class="ui-grid-col-6">
+          <p-fileUpload name="demo[]"  (onSelect)="onSelect($event)" (onRemove)="onRemove($event)" multiple="multiple"
+           accept="image/*" maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false">
+            <ng-template pTemplate="content">
+              <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+              </ul>
+            </ng-template>
+          </p-fileUpload>
+        </div>
+        <div class="ui-grid-col-4"></div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-2"></div>
+        <div class="ui-grid-col-6">
+          <button pButton type="submit" label="Submit" [disabled]="onValidForm()"></button>
+        </div>
+        <div class="ui-grid-col-4"></div>
+      </div>
+    </div>
+  </p-panel>
+</form>
+

@@ -1,0 +1,68 @@
+<p-toast [style]="{marginTop: '200px', marginRight: '800px'}"></p-toast>
+  <h3 style="text-align: center; text-decoration-line: underline;" class="fw" *ngIf="cacheForm == false">IDENTIFICATION : </h3>
+  <h3 style="text-align: center;" class="fw" *ngIf="cacheForm == true">Identification réussi
+    <span icon="pi pi-check"></span>
+  </h3>
+    <form (ngSubmit)="onSubmitClient()" [hidden]="cacheForm">
+        <div class="form-group fg" >
+            <label class="fw" for="name">Prenom:</label>
+            <input type="text" class="form-control" id="prenom" required [(ngModel)]="newClient.prenom" name="prenom">
+        </div>
+        <div class="form-group fg">
+            <label class="fw" for="name">Nom:</label>
+            <input type="text" class="form-control" id="nom" required [(ngModel)]="newClient.nom" name="nom">
+        </div>
+        <div class="form-group fg">
+            <label class="fw" for="name">Telephone:</label>
+            <input type="number" class="form-control" id="telephone" required [(ngModel)]="newClient.telephone" name="telephone">
+        </div>
+        <div class="form-group fg">
+            <label class="fw" for="name">Sexe:</label><br>
+            Masculin: &nbsp;<input type="radio" name="sexe" >
+            Féminin: &nbsp;<input type="radio"  id="sexe"  [(ngModel)]="newClient.sexe" name="sexe" value="f">
+        </div>
+        <div class="form-group fg">
+            <label class="fw" for="name">Date de naissance:</label>
+            <input type="date" class="form-control" id="date_naissance" required [(ngModel)]="newClient.date_naissance" name="date_naissance">
+        </div>
+        <button type="submit" class="btn btn-primary"
+          style="width: 140px; ">Identification</button>
+    </form>
+    <div  [hidden]="cache">
+       <span class="det" *ngIf="newClient.sexe !== 'f'">
+        Monsieur <span class="fw">{{ newClient.nom  | uppercase }}</span>
+      </span><br/>
+      <span class="det" *ngIf="newClient.sexe == 'f'">
+        Madame  <span class="fw">{{ newClient.nom |uppercase }}</span>
+      </span><br/>
+      <span class="ef"> Prenom:</span>  <span class="fw"> {{ newClient.prenom  }}</span><br/>
+      <span class="ef"> Telephone:</span>  <span class="fw"> {{ newClient.telephone  }}</span><br/>
+      <span class="ef"> Date de naissance:</span>  <span class="fw"> {{ newClient.date_naissance  }}</span>
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-group fg" >
+            <label class="fw" for="name">Voulez-vous un chauffeur ? </label>
+            &nbsp;&nbsp;<input type="checkbox" value="chauffeur" id="chauffeur" [(ngModel)]="newReservation.chauffeur" name="chauffeur">
+        </div>
+        <span style="text-decoration: underline;">Choisissez la date de début et de fin de la location.</span>
+        <div class="form-group fg">
+          <label class="fw" for="name">Début:</label>
+          <input type="date" class="form-control" id="debut_reservation" [(ngModel)]="newReservation.debut_reservation"
+          name="debut_reservation">
+        </div>
+        <div class="form-group fg">
+          <label class="fw" for="name">Fin:</label>
+          <input type="date" id="fin_reservation" class="form-control" [(ngModel)]="newReservation.fin_reservation"
+          name="fin_reservation">
+      </div>
+      <button type="submit" class="btn btn-success"
+          style="width: 140px; ">Reservation</button>
+        </form>
+    </div>
+    <div style="margin-left: 200px; margin-right: 200px;">
+      <p-dialog [(visible)]="showBtnSuccess" (onHide)="onClickBtnSuccess()" >
+      {{ success }}
+      <footer>
+        <button class="btn btn-success" (click)="onClickBtnSuccess()">Fermer</button>
+      </footer>
+    </p-dialog>
+  </div>

@@ -1,0 +1,48 @@
+<div *ngIf="showReservation">
+  <table class="table table-striped  ">
+    <tr class="row ">
+      <th class="col-md-1">Nom</th>
+      <th class="col-md-2">Prenom</th>
+      <th class="col-md-2">Telephone</th>
+      <th class="col-md-2">Produit reservé</th>
+      <th class="col-md-3">date Reservation</th>
+      <th>Actions</th>
+    </tr>
+    <tr class="row table-hover" *ngFor="let reservation of reservations">
+      <td class="col-md-1">{{ reservation.client.nom }}</td>
+      <td class="col-md-2">{{ reservation.client.prenom }}</td>
+      <td class="col-md-2">{{ reservation.client.telephone }}</td>
+      <td class="col-md-2">Mrq: {{ reservation.voiture.marque }}, Mdl: {{ reservation.voiture.model }} </td>
+      <td class="col-md-3">Début: {{ reservation.debut_reservation }}, Fin:  {{ reservation.fin_reservation }}</td>
+      <td> <i class="pi pi-eye btn btn-primary" (click)="onClick(reservation)"></i>
+      &nbsp; <i class="pi pi-trash btn btn-danger"></i>  </td>
+    </tr>
+  </table>
+</div>
+<!-- plus de détail -->
+    <p-dialog [(visible)]="cacheDetail" header="Reservation" [modal]="true"
+     [style]="{width: '55vw', height: '20vw'}" [baseZIndex]="10000"
+    [draggable]="true" [resizable]="true" *ngIf="detailReservation">
+       <div class="row">
+        <div class="col-md-3">
+          <p style="font-weight: bold; text-decoration: underline;">Le client :</p>
+          <p>Nom: <span style="font-weight: bold;"> {{ detailReservation.client.nom }} </span> </p>
+          <p>Prenom: <span style="font-weight: bold;"> {{ detailReservation.client.prenom }} </span> </p>
+          <p>Telephone: <span style="font-weight: bold;"> {{ detailReservation.client.telephone }} </span> </p>
+          <p>Date de naissance: <span style="font-weight: bold;"> {{ detailReservation.client.date_naissance }} </span> </p>
+        </div>
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
+          <p style="font-weight: bold; text-decoration: underline;">Produit reservé</p>
+          <p *ngIf="image">
+            <img src="../../assets/{{ image.image1 }}" alt="pht">
+          </p>
+          <p>Modèle: <span style="font-weight: bold;"> {{ detailReservation.voiture.model }} </span> </p>
+          <p>Marque: <span style="font-weight: bold;"> {{ detailReservation.voiture.marque }} </span> </p>
+          <p>Debut reservation: <span style="font-weight: bold;"> {{ detailReservation.debut_reservation }} </span> </p>
+          <p>Fin reservation: <span style="font-weight: bold;"> {{ detailReservation.fin_reservation }} </span> </p>
+          <p>Prix total: <span class="btn btn-success" style="font-weight: bold;"> {{ detailReservation.prix_total }} FCFA</span> </p>
+        </div>
+       </div>
+    </p-dialog>
+

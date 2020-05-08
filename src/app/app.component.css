@@ -1,0 +1,28 @@
+
+/* :host ::ng-deep .ui-toast {
+  top: 80px;
+}
+:host ::ng-deep .news-active .ui-toast {
+  top: 150px;
+}
+@media screen and (max-width: 64em) {
+  :host ::ng-deep .ui-toast {
+      top: 110px;
+  }
+  :host ::ng-deep .news-active .ui-toast {
+      top: 180px;
+  }
+} */
+.page-layout{
+  /* height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; */
+  padding: 15px 40px;
+
+}
+.content{
+  margin-top: 40px;
+}
+
+

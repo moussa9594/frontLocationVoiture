@@ -1,0 +1,16 @@
+.fg{
+  height: 55px;
+}
+.det{
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.ef{
+  font-size: 10px;
+  text-decoration: underline;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.fw{
+  font-weight: bold;
+  color: white;
+}
