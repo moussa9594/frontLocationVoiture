@@ -8,16 +8,18 @@ import { LoginComponent } from './home/login/login.component';
 import { AppComponent } from './app.component';
 import { AdminComponent } from './admin/admin.component';
 import { ModifierVoitureComponent } from './voiture/modifier-voiture/modifier-voiture.component';
+import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   {path: '' , component: VoitureComponent},
   {path: 'login' , component: LoginComponent},
-  {path: 'admin' , component: AdminComponent},
+  {path: 'admin' , component: AdminComponent, canActivate: [AuthGuard]},
   {path: 'admin/:new' , component: AdminComponent},
   {path: 'login/:inscrire' , component: LoginComponent},
   {path: 'creerVoiture' , component: CreerVoitureComponent},
-  {path: 'modifierVoiture/:id_voiture' , component: ModifierVoitureComponent},
-  {path: 'reservation/:id_voiture' , component: ReservationComponent}
+  {path: 'modifierVoiture/:id' , component: ModifierVoitureComponent},
+  {path: 'reservation/:id' , component: ReservationComponent},
+  { path: '**', redirectTo: '' }
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -10,7 +10,7 @@ import { GiphyService } from 'src/app/giphy.service';
 })
 export class DetailsVoitureComponent implements OnInit {
 
-  @Input() detailsVoiture: VoitureIms;
+  @Input() detailsVoiture: any;
   visibleDetail= false;
   @Input() url = '';
   constructor(private giphyService: GiphyService) { }

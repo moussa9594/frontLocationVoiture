@@ -11,15 +11,17 @@ import { map } from 'rxjs/operators';
 })
 export class GestionVoituresComponent implements OnInit {
 
-  @Input() showVoiture: boolean;
+  @Input() showVoiture = false;
   showModifier = false;
   visibleDetail = false;
+  showList = false;
   voitureSubsription: Subscription;
+  voitureByMdlSubsription: Subscription;
   modeleSubsription: Subscription;
-  voitures: VoitureIms[];
+  voitures: Array<any>;
   modifierVoiture: VoitureIms;
-  voituresByModele: VoitureIms[];
-  detailsVoiture: VoitureIms;
+  voituresByModele: Array<any>;
+  detailsVoiture: any;
   modeles: any;
   url = ''
   constructor(private serviceVoiture: ServiceVoitureService) { }
@@ -34,7 +36,7 @@ export class GestionVoituresComponent implements OnInit {
     );
     // modeles
     this.serviceVoiture.getModeles();
-    this.serviceVoiture.modelesSubject.subscribe(
+    this.modeleSubsription = this.serviceVoiture.modelesSubject.subscribe(
       (modeles: any) => {
         this.modeles = modeles;
       }
@@ -45,17 +47,11 @@ export class GestionVoituresComponent implements OnInit {
   }
 
   getVoitureByModel(modele: string) {
-    this.serviceVoiture.voituresAndImsSubject.pipe(
-      map(
-        (voitures: VoitureIms[]) => {
-          voitures.filter(
-            (voiture: VoitureIms) => voiture.model === modele
-          );
-        }
-      )
-    ).subscribe(
-      (voituresByModele: any) => {
-        this.voituresByModele = voituresByModele;
+    this.serviceVoiture.getVoituresAndImsByMdl(modele);
+    this.voitureByMdlSubsription = this.serviceVoiture.voituresAndImsByMdlSubject.subscribe(
+      voitures => {
+        this.voituresByModele = voitures
+        this.showList = true
       }
     );
   }

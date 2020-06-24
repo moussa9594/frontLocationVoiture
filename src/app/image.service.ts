@@ -8,7 +8,7 @@ import { Images } from './models/images';
 })
 export class ImageService {
 
-  private url = '//localhost:8080/';
+  private url = '//locationvoiture.cfapps.io/';
 
   imageSubject = new Subject<Images>();
   getImage: Images;

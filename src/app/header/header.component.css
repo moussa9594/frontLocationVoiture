@@ -1,15 +1,30 @@
-#bienvenu{
-  color: white;
-  font-weight: bold;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  text-align: center;
+
+#ctc{
+margin-left: 780px;
+
 }
-.login{
-margin-left: 850px;
+#home{
+  font-weight: bold;
+}
+
+.ctc{
+  font-size: 13px;
+  font-family: sans-serif;
+
 }
 .header{
   position: fixed;
-  width: 1400px;
+  width: 1225px;
   Z-index: 999;
   margin-top: -20px;
+  margin-left: 33px;
 }
+ .fa-phone, .fa-envelope{
+  margin-left: 20px;
+ }
+ .nav-item, .nav-link, .navbar-nav{
+   font-size: 15px;
+   font-weight: bold;
+   color: white;
+ }
+

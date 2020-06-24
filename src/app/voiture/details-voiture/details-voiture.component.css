@@ -4,3 +4,13 @@
 .ferme{
   float: right;
 }
+
+.detail{
+  position: fixed;
+  margin-left: 590px;
+  margin-top: 40px;
+}
+.in_detail{
+  font-size: 30px;
+  font-family: Georgia;
+}

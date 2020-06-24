@@ -4,23 +4,21 @@
       <th class="col-md-1">Nom</th>
       <th class="col-md-2">Prenom</th>
       <th class="col-md-2">Telephone</th>
-      <th class="col-md-2">Produit reservé</th>
-      <th class="col-md-3">date Reservation</th>
+      <th class="col-md-2">Date de naissance</th>
       <th>Actions</th>
     </tr>
-    <tr class="row table-hover" *ngFor="let reservation of reservations">
-      <td class="col-md-1">{{ reservation.client.nom }}</td>
-      <td class="col-md-2">{{ reservation.client.prenom }}</td>
-      <td class="col-md-2">{{ reservation.client.telephone }}</td>
-      <td class="col-md-2">Mrq: {{ reservation.voiture.marque }}, Mdl: {{ reservation.voiture.model }} </td>
-      <td class="col-md-3">Début: {{ reservation.debut_reservation }}, Fin:  {{ reservation.fin_reservation }}</td>
-      <td> <i class="pi pi-eye btn btn-primary" (click)="onClick(reservation)"></i>
+    <tr class="row table-hover" *ngFor="let client of clients " >
+      <td class="col-md-1">{{ client.payload.data().nom }}</td>
+      <td class="col-md-2">{{ client.payload.data().prenom }}</td>
+      <td class="col-md-2">{{ client.payload.data().telephone }}</td>
+      <td class="col-md-2">{{ client.payload.data().date_naissance }}</td>
+      <td> <i class="pi pi-eye btn btn-primary" (click)="onClick(client.payload.id)"></i>
       &nbsp; <i class="pi pi-trash btn btn-danger"></i>  </td>
     </tr>
   </table>
 </div>
 <!-- plus de détail -->
-    <p-dialog [(visible)]="cacheDetail" header="Reservation" [modal]="true"
+    <!-- <p-dialog [(visible)]="cacheDetail" header="Reservation" [modal]="true"
      [style]="{width: '55vw', height: '20vw'}" [baseZIndex]="10000"
     [draggable]="true" [resizable]="true" *ngIf="detailReservation">
        <div class="row">
@@ -44,5 +42,5 @@
           <p>Prix total: <span class="btn btn-success" style="font-weight: bold;"> {{ detailReservation.prix_total }} FCFA</span> </p>
         </div>
        </div>
-    </p-dialog>
+    </p-dialog> -->
 

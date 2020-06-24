@@ -3,10 +3,10 @@
   <div class="col-lg-3 mod">
     <p-orderList [value]="modeles" [listStyle]="{'height':'277px'}"  header="Modèles" filter="filter" filterBy="model"
       filterPlaceholder="Rechercher par modèle">
-      <ng-template let-car pTemplate="item" >
-        <div class=" ui-helper-clearfix" (click)="getVoitureByModel(car[0])">
-          <img src="../../assets/logos/{{car[1]}}" style="display:inline-block;margin:2px 0 2px 2px" width="40">
-          <div style="float:right;font-weight: bold;margin-top: 15px;">{{car[0]}}</div>
+      <ng-template let-modele pTemplate="item" >
+        <div class=" ui-helper-clearfix" (click)="getVoitureByModel(modele.model)">
+          <img src="../../assets/logos/{{modele.logo}}" style="display:inline-block;margin:2px 0 2px 2px" width="40">
+          <div style="float:right;font-weight: bold;margin-top: 15px;">{{modele.model}}</div>
         </div>
       </ng-template>
     </p-orderList>
@@ -16,37 +16,39 @@
     [routerLink]="['/creerVoiture']" routerLinkActive="router-link-active" /></div>
   <!--Debut affichage des voitures par modele -->
 
-  <div class="col-lg-6 car-details" *ngFor="let car of voituresByModele">
+  <div class="col-lg-9 voitures car-details">
+  <div class="car-details" *ngFor="let car of voituresByModele">
     <div class="p-grid p-nogutter">
       <div class="p-col-3">
-        <img class="im" src="../../../assets/{{ car.image1 }}" alt="photo" width="220px" style="margin-left: 17px;"
+        <img class="im" src="../../../assets/{{ car.payload.doc.data().images.im1 }}" alt="photo" width="220px" style="margin-left: 17px;"
           (click)="onSelect(car)">
       </div>
       <div class="p-col-12 car-data">
-        <span>Modèle: <div class="car-title">{{car.model}}</div>
-          <img src="../../../assets/logos/{{ car.image3 }}" alt="photo" width="30px">
+        <span>Modèle: <div class="car-title">{{car.payload.doc.data().model}}</div>
+          <img src="../../../assets/logos/{{ car.payload.doc.data().images.im3 }}" alt="photo" width="30px">
         </span><br>
         <span>Marque: </span>
-        <div class="car-subtitle">{{car.marque}}</div>
+        <div class="car-subtitle">{{car.payload.doc.data().marque}}</div>
       </div>
     </div>
   </div>
+</div>
 
   <!-- fin affichage des voitures par modele -->
   <!-- comencement du caroussel liste des voitures -->
-<div  class="col-lg-9 voitures">
+<div  class="col-lg-9 voitures" [hidden]="showList">
   <div class="car-details" *ngFor="let car of voitures">
     <div class="p-grid p-nogutter">
       <div >
-        <img class="im" src="../../../assets/{{ car.image1 }}" alt="photo" width="220px" style="margin-left: 17px;"
+        <img class="im" src="../../../assets/{{ car.payload.doc.data().images.im1 }}" alt="photo" width="220px" style="margin-left: 17px;"
           (click)="onSelect(car)">
       </div>
       <div class=" car-data">
-        <span>Modèle: <div class="car-title">{{car.model}}</div>
-          <img src="../../../assets/logos/{{ car.image3 }}" alt="photo" width="30px">
+        <span>Modèle: <div class="car-title">{{car.payload.doc.data().model}}</div>
+          <img src="../../../assets/logos/{{ car.payload.doc.data().images.im3 }}" alt="photo" width="30px">
         </span><br>
         <span>Marque: </span>
-        <div class="car-subtitle">{{car.marque}}</div>
+        <div class="car-subtitle">{{car.payload.doc.data().marque}}</div>
       </div>
     </div>
   </div>
@@ -61,29 +63,29 @@
     <div class="p-grid">
       <div *ngIf="detailsVoiture" class="p-col-12 p-md-6 p-lg-6">
         <div style="display: inline-block;">
-          <img src="../../../assets/{{ detailsVoiture.image1 }}" alt="photo" width="150px"
+          <img src="../../../assets/{{ detailsVoiture.payload.doc.data().images.im1 }}" alt="photo" width="150px"
             style="margin-left: 17px;">
             <br>
-          <img src="../../../assets/{{ detailsVoiture.image2 }}" alt="photo" width="150px" style="margin-left: 17px;">
+          <img src="../../../assets/{{ detailsVoiture.payload.doc.data().images.im2 }}" alt="photo" width="150px" style="margin-left: 17px;">
         </div>
         <div style="float: right; margin-right: 50px; margin-bottom: 30px;">
-          <span class="tr"> Marque: </span> {{ detailsVoiture.marque }} <br>
-          <span class="tr"> Modèle: </span> {{ detailsVoiture.model }}
-          <img src="../../../assets/logos/{{ detailsVoiture.image3 }}" alt="photo" width="60px"
+          <span class="tr"> Marque: </span> {{ detailsVoiture.payload.doc.data().marque }} <br>
+          <span class="tr"> Modèle: </span> {{ detailsVoiture.payload.doc.data().model }}
+          <img src="../../../assets/logos/{{ detailsVoiture.payload.doc.data().images.im3 }}" alt="photo" width="60px"
             style="margin-left: 17px;"><br>
-          <span class="tr"> Nombre de porte: </span> {{ detailsVoiture.nbre_porte }}<br>
-          <span class="tr"> Prix/jour: </span> {{ detailsVoiture.prix_jour }} FCFA<br>
-          <span class="tr"> Stock restant: </span> {{ detailsVoiture.stock }} voiture(s)<br>
-          <span class="tr"> Description: </span> {{ detailsVoiture.description }}
+          <span class="tr"> Nombre de porte: </span> {{ detailsVoiture.payload.doc.data().nbre_porte }}<br>
+          <span class="tr"> Prix/jour: </span> {{ detailsVoiture.payload.doc.data().prix_jour }} FCFA<br>
+          <span class="tr"> Stock restant: </span> {{ detailsVoiture.payload.doc.data().stock }} voiture(s)<br>
+          <span class="tr"> Description: </span> {{ detailsVoiture.payload.doc.data().description }}
         </div>
       </div>
     </div>
   </div>
   <p-footer>
     <button type="button" pButton icon="pi pi-pencil" label="Modifier"
-      class="ui-button-success" [routerLink]="['/modifierVoiture', detailsVoiture.id_voiture]" routerLinkActive="router-link-active" ></button>
+      class="ui-button-success" [routerLink]="['/modifierVoiture', detailsVoiture.payload.doc.id]" routerLinkActive="router-link-active" ></button>
     <button type="button" pButton icon="pi pi-trash" label="Supprimer"
-      [routerLink]="['/reservation', detailsVoiture.id_voiture]"
+      [routerLink]="['/reservation', detailsVoiture.payload.doc.id]"
       routerLinkActive="router-link-active" class="ui-button-danger"></button>
     <button class="fermer" type="button" pButton icon="pi pi-times" (click)="clickFermer()" label="fermer"
       class="ui-button-secondary"></button>

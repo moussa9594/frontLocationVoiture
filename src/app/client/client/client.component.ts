@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 import { Client } from 'src/app/models/client';
 import { Reservation } from 'src/app/models/reservation';
 import { Router } from '@angular/router';
@@ -7,7 +7,6 @@ import { ReservationComponent } from 'src/app/reservation/reservation/reservatio
 import { ServiceVoitureService } from 'src/app/voiture.service';
 import { ReservationService } from 'src/app/reservation.service';
 import { Observable, Subscription } from 'rxjs';
-import { Voiture } from 'src/app/models/voiture';
 import { VoitureIms } from 'src/app/models/voitureIms';
 import { MessageService } from 'primeng/api';
 
@@ -21,12 +20,12 @@ import { MessageService } from 'primeng/api';
 export class ClientComponent implements OnInit {
 
   newClient: Client = new Client();
-  id_voiture: number;
+  idDoc: string;
   // id_clientReserver: number;
   newReservation: Reservation = new Reservation();
   voitureSubscription: Subscription;
   voitureAndImsSubscription: Subscription;
-  voitureReserver: Voiture;
+  voitureReserver: VoitureIms;
   clientReserver: Client;
   prixJourVoitureReserver: number;
   nbreJourReservation: number;
@@ -41,6 +40,7 @@ export class ClientComponent implements OnInit {
   testeClientNum: Client;
   showBtnSuccess = false;
   success = '';
+  docClient = '';
 
   constructor(
     private routeClient: Router,
@@ -52,53 +52,68 @@ export class ClientComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+
+
     // recupération de l'id_voiture dépuis le compononet reservationComponent
     this.reservationComponent.activeRoute.paramMap.subscribe(
       // tslint:disable-next-line: radix
-      params => this.id_voiture = parseInt(params.get('id_voiture')));
+      params => this.idDoc = params.get('id'));
       this.getVoitureAndIms();
 
   }
 
    // recupération de la voiture avec l'id_voiture et ses images
    getVoitureAndIms() {
-    this.voitureService.getVoitureAndIms(this.id_voiture);
+    this.voitureService.getDoc(this.idDoc).subscribe( (voiture: any) => {
+      this.voitureReserver = voiture;
+      this.prixJourVoitureReserver = this.voitureReserver.prix_jour;
+    });
     this.voitureAndImsSubscription = this.voitureService.voitureAndImsSubject.subscribe(
       (voiture: VoitureIms) => {
-        this.voitureReserver = voiture;
-        this.prixJourVoitureReserver = this.voitureReserver.prix_jour;
-        this.newReservation.voiture = this.voitureReserver;
+
       }
     );
+
    }
   ifExistNumClient() {
     this.telephoneClient = this.newClient.telephone.toString();
     this.clientService.getClientByTel(this.telephoneClient).subscribe(
       data => {
-        if(data == null) {
-          this.enregistrerClient();
+        if(data.length == 0) {
+         this.creerClient();
+         this.creerReservation();
+        } else{
+            this.creerReservation();
         }
       }
     );
   }
+// a venir
+  // updateStockVoiture() {
+  //   this.voitureReserver.stock = this.voitureReserver.stock - 1;
+  //   this.voitureService.creerVoiture(this.voitureReserver)
+  //     .subscribe(data => console.log(data), error => console.log(error));
+  // }
 
-  updateStockVoiture() {
-    this.voitureReserver.stock = this.voitureReserver.stock - 1;
-    this.voitureService.creerVoiture(this.voitureReserver)
-      .subscribe(data => console.log(data), error => console.log(error));
-  }
-
-  enregistrerClient() {
+  creerClient() {
     if (this.newClient.sexe == null) {
       this.newClient.sexe = 'm';
     }
-    this.clientService.enregistrerClient(this.newClient)
-      .subscribe(data => {
-        this.clientReserver = data;
-        this.newReservation.client = this.clientReserver;
-        console.log('le client enregistrer: ');
-        console.log(this.clientReserver);
+    this.clientService.creerClient(this.newClient)
+      .then(data => {
+
       });
+  }
+
+  updateStock() {
+    this.voitureService.updateStockVoiture(this.idDoc, this.voitureReserver).then(res => {})
+  }
+  creerReservation(){
+    this.clientService.getClientByTel(this.newClient.telephone).subscribe((res: any) => {
+      this.reservationService.creerReservation(this.newReservation, this.voitureReserver, res[0].payload.doc.data()).then(res => {
+      })
+      this.updateStock()
+    })
   }
 
   // fonction pour controler les dates
@@ -127,8 +142,8 @@ export class ClientComponent implements OnInit {
       // // Enregistrement du client et recupèration selon le numéro de tel de neWClient
       this.ifExistNumClient();
       // enregistrement de la reservation
-      this.enregistrerReservation();
-      this.updateStockVoiture();
+      // this.enregistrerReservation();
+      // this.updateStockVoiture();
       this.success = 'Votre reservation a été prise en compte. Rendez-vous au plutard demain à 16h pour finaliser'
        + ' et recevoir votre voiture. Passer ce délai la voiture pourra être réserver par un autre client.'
       + 'Sall&Frère Location vous remercie de votre fidélité.';
@@ -140,19 +155,18 @@ export class ClientComponent implements OnInit {
     this.routeClient.navigate(['']);
   }
 
-  enregistrerReservation() {
-    // this.clientRecuperer();
-    this.reservationService.creerReservation(this.newReservation)
-      .subscribe(data => {
-        console.log('methode enregistrer reservation')
-        console.log(data);
-      });
-  }
+  // enregistrerReservation() {
+  //   // this.clientRecuperer();
+  //   this.reservationService.creerReservation(this.newReservation)
+  //     .subscribe(data => {
+  //       console.log('methode enregistrer reservation')
+  //       console.log(data);
+  //     });
+  // }
   // action à faire à la validation du formulaire de client
   onSubmitClient() {
-    console.log('valeur retourner..')
-    this.ifExistNumClient();
-    // this.enregistrerClient();
+    // this.ifExistNumClient();
+    // this.creerClient();
     if ((this.newClient.prenom.length <= 0) || (this.newClient.telephone == null)
       || (this.newClient.date_naissance.toString().length <= 0) || (this.newClient.nom.length <= 0)) {
       alert('Tous les champs sont obligatoires.')
@@ -172,12 +186,13 @@ export class ClientComponent implements OnInit {
     this.nbreJourReservation = this.fin - this.debut;
     // calcul du prix total
     this.prixTotal = this.nbreJourReservation * this.prixJourVoitureReserver;
-    console.log(this.newReservation.prix_total)
-    console.log(this.newReservation.chauffeur)
-    if (this.newReservation.chauffeur != null) {
+    if (this.newReservation.chauffeur != undefined) {
       this.newReservation.prix_total = this.prixTotal + 5000;
+    console.log(this.newReservation.prix_total)
     } else {
       this.newReservation.prix_total = this.prixTotal;
+      this.newReservation.chauffeur = 'non';
+      console.log(this.newReservation.prix_total)
     }
     // controle des dates
     this.controleDate(this.newReservation.debut_reservation, this.newReservation.fin_reservation);

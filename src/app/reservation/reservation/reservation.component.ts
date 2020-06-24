@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { VoitureIms } from 'src/app/models/voitureIms';
 import { Observable, Subscription } from 'rxjs';
 import { GiphyService } from 'src/app/giphy.service';
-import { Voiture } from 'src/app/models/voiture';
 import { Client } from 'src/app/models/client';
 
 @Component({
@@ -15,14 +14,15 @@ import { Client } from 'src/app/models/client';
 export class ReservationComponent implements OnInit {
   voitureAndImsSubscription: Subscription;
   voituresAndImsSubscription: Subscription;
-  voitureReserver: VoitureIms;
+  voitureReserver: any;
   clientSubscription: Subscription;
   clientReserver: Client;
-  voitures: VoitureIms[];
+  voitures: Array<any>;
   url: Observable<any[]>;
   listVoitures: VoitureIms[];
-  id_voiture: number;
+  idDoc: string;
   responsiveOptions;
+  prixJourVoitureReserver;
   constructor(private serviceVoiture: ServiceVoitureService,
               public activeRoute: ActivatedRoute, private giphyService: GiphyService,
               private voitureService: ServiceVoitureService
@@ -31,8 +31,9 @@ export class ReservationComponent implements OnInit {
   ngOnInit() {
     this.activeRoute.paramMap.subscribe(param => {
         // tslint:disable-next-line: radix
-        this.id_voiture = parseInt( param.get('id_voiture') );
-      });
+        this.idDoc = param.get('id');
+        this.getDoc();
+   });
 
     this.responsiveOptions = [
         {
@@ -54,13 +55,18 @@ export class ReservationComponent implements OnInit {
     // init liste voiture
     this.getVoituresAndIms();
     // init voiture reserver
-    this.voitureService.getVoitureAndIms(this.id_voiture);
-    this.voitureAndImsSubscription = this.voitureService.voitureAndImsSubject.subscribe(
-      (voiture: VoitureIms) => {
-        this.voitureReserver = voiture;
+
+  }
+// voiture reserver
+  getDoc() {
+    this.serviceVoiture.getDoc(this.idDoc).subscribe(
+      (voitureReserver: any) => {
+        this.voitureReserver = voitureReserver
+        this.prixJourVoitureReserver = this.voitureReserver.prix_jour
       }
     );
   }
+
    // recupération des voitures avec leurs images
    getVoituresAndIms() {
     this.voitureService.getVoituresAndIms();
@@ -70,5 +76,7 @@ export class ReservationComponent implements OnInit {
       }
     );
    }
+
+
 
 }

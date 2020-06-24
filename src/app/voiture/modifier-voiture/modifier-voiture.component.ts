@@ -15,8 +15,7 @@ export class ModifierVoitureComponent implements OnInit {
 
   marques;
   modeles;
-  modifierVoiture: VoitureIms;
-  modifierImages: Images;
+  modifierVoiture: any;
   voitureSubscription: Subscription;
   imageSubscription: Subscription;
   // tslint:disable-next-line: variable-name
@@ -27,6 +26,7 @@ export class ModifierVoitureComponent implements OnInit {
   new = 'new';
   showCarac = false;
   showImages = true;
+  idDoc: string;
 
   constructor(
               private voitureService: ServiceVoitureService,
@@ -78,47 +78,33 @@ export class ModifierVoitureComponent implements OnInit {
 
     this.activatedRoute.paramMap.subscribe( param => {
       // tslint:disable-next-line: radix
-      this.id_voiture = parseInt(param.get('id_voiture'));
+      this.idDoc = param.get('id');
     }
     );
     //
     this.getVoitureIms();
-    this.getImages();
     this.onValidForm();
   }
   // methode de recupération de la voiture
   getVoitureIms() {
-    this.voitureService.getVoitureAndIms(this.id_voiture);
-    this.voitureSubscription = this.voitureService.voitureSubject.subscribe(
+    this.voitureService.getDoc(this.idDoc).subscribe(
       (voiture: any) => {
-        this.modifierVoiture = voiture[0];
-        console.log(this.modifierVoiture);
-      }
-    );
-  }
-  // methode de recupération des images d'une voiture
-  getImages() {
-    this.imageService.getImages(this.id_voiture);
-    this.imageSubscription = this.imageService.imageSubject.subscribe(
-      (image: any) => {
-        this.modifierImages = image;
-        console.log(this.modifierImages);
+        this.modifierVoiture = voiture;
+        console.log(voiture)
       }
     );
   }
 
   validerModifVoiture() {
-    this.voitureService.creerVoiture(this.modifierVoiture).subscribe(data =>{});
+    this.voitureService.updateVoiture(this.idDoc, this.modifierVoiture).then(res => {
+    this.router.navigate(['/admin', this.new]);
+    })
   }
 
-  validerModifImage() {
-    this.imageService.creerImages(this.modifierImages).subscribe(data =>{});
-  }
+
 
   onSubmit() {
     this.validerModifVoiture();
-    this.validerModifImage();
-    this.router.navigate(['/admin', this.new]);
   }
 
   onValidForm(): boolean {
@@ -134,19 +120,18 @@ export class ModifierVoitureComponent implements OnInit {
 }
 
 onSelectIm1(evt: any) {
-  this.modifierImages.image1 = evt.currentFiles[0].name;
+  this.modifierVoiture.images.im1 = evt.currentFiles[0].name;
 }
 onSelectIm2(evt: any) {
-  this.modifierImages.image2 = evt.currentFiles[0].name;
+  this.modifierVoiture.images.im2 = evt.currentFiles[0].name;
 }
 onSelectIm3(evt: any) {
-  this.modifierImages.image3 = evt.currentFiles[0].name;
+  this.modifierVoiture.images.im3 = evt.currentFiles[0].name;
 }
 
 onClickAppliquer() {
 this.showImages = true;
 this.showCarac = false;
-console.log(this.modifierImages)
 }
 
 }

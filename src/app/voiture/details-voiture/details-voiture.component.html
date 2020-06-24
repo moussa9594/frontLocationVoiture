@@ -1,20 +1,55 @@
-<div class="form-wrapper">
+<!-- <div class="form-wrapper" style="margin-bottom: 200px;">
   <div class="p-grid">
     <div *ngIf="detailsVoiture" class="p-col-12 p-md-6 p-lg-6">
-      <div style="display: inline-block;">
-        <img src="{{ url }}" alt="photo" width="150px" style="margin-left: 17px;"><br>
-        <!-- <img src="../../../assets/{{ detailsVoiture.image1 }}" alt="photo" width="150px" style="margin-left: 17px;"> -->
-        <br>
-        <img src="../../../assets/{{ detailsVoiture.image2 }}" alt="photo" width="150px" style="margin-left: 17px;">
+      <div style="display: inline-block;"> -->
+<!-- <img src="{{ url }}" alt="photo" width="150px" style="margin-left: 17px;"><br> -->
+<!-- <img src="../../../assets/{{ detailsVoiture.payload.doc.data().image1 }}"
+        alt="photo" width="150px" style="margin-left: 17px;">
+        <img src="../../../assets/{{ detailsVoiture.payload.doc.data().images.im2 }}"
+        alt="photo" width="150px" style="margin-left: 17px;">
       </div>
       <div style="float: right; margin-right: 50px; margin-bottom: 30px;">
-        <span class="tr"> Marque: </span> {{ detailsVoiture.marque }} <br>
-        <span class="tr"> Modèle: </span> {{ detailsVoiture.model }}
-        <img src="../../../assets/logos/{{ detailsVoiture.image3 }}" alt="photo" width="60px" style="margin-left: 17px;"><br>
-        <span class="tr"> Nombre de porte: </span> {{ detailsVoiture.nbre_porte }}<br>
-        <span class="tr"> Prix/jour: </span> {{ detailsVoiture.prix_jour }} FCFA<br>
-        <span class="tr"> Description: </span> {{ detailsVoiture.description }}
+        <span class="tr"> Marque: </span> {{ detailsVoiture.payload.doc.data().marque }} <br>
+        <span class="tr"> Modèle: </span> {{ detailsVoiture.payload.doc.data().model }}
+        <img src="../../../assets/logos/{{ detailsVoiture.payload.doc.data().images.im3 }}" alt="photo" width="60px" style="margin-left: 17px;"><br>
+        <span class="tr"> Nombre de porte: </span> {{ detailsVoiture.payload.doc.data().nbre_porte }}<br>
+        <span class="tr"> Prix/jour: </span> {{ detailsVoiture.payload.doc.data().prix_jour }} FCFA<br>
+        <span class="tr"> Description: </span> {{ detailsVoiture.payload.doc.data().description }}
       </div>
     </div>
+  </div>
+</div> -->
+<div class="row" *ngIf="detailsVoiture">
+  <div class="col-lg-5">
+    <img src="../../../assets/{{ detailsVoiture.payload.doc.data().images.im1
+      }}"
+      alt="photo" width="550px" style="margin-left: 17px; margin-bottom: 30px;">
+    <img src="../../../assets/{{ detailsVoiture.payload.doc.data().images.im2
+      }}"
+      alt="photo" width="550px" style="margin-left: 17px;">
+  </div>
+  <div class="col-lg-4 detail">
+    <span class="tr"> Marque: </span><span class="in_detail"> {{
+      detailsVoiture.payload.doc.data().marque }}</span> <br>
+    <span class="tr"> Modèle: </span><span class="in_detail"> {{
+      detailsVoiture.payload.doc.data().model }}</span>
+    <img src="../../../assets/logos/{{
+      detailsVoiture.payload.doc.data().images.im3 }}" alt="photo" width="60px"
+      style="margin-left: 17px;"><br>
+    <span class="tr"> Nombre de porte: </span><span class="in_detail"> {{
+      detailsVoiture.payload.doc.data().nbre_porte }}</span><br>
+    <span class="tr"> Prix/jour: </span>
+    <span style="color: red; font-weight: bold;" class="in_detail">
+      {{ detailsVoiture.payload.doc.data().prix_jour }} FCFA
+    </span><br>
+    <span class="tr"> Description: </span>
+    <span class="in_detail">
+      {{ detailsVoiture.payload.doc.data().description }}
+    </span><br>
+    <button type="button" pButton label="Reserver mantenant"
+    style="font-weight: bold; width: 260px;" icon="fa fa-car"
+    [disabled]="detailsVoiture.stock == 0 ? true : false"
+    [routerLink]="['/reservation', detailsVoiture.payload.doc.id]"
+    routerLinkActive="router-link-active" class="ui-button-success"></button>
   </div>
 </div>

@@ -24,35 +24,55 @@ export class GestionReservationsComponent implements OnInit, OnDestroy {
   image: Images;
   reservations: Reservation[];
   detailReservation: Reservation;
+  clients
+  voitures: Array<any>
   ngOnInit() {
     // init getResrvations
     console.log('init')
     console.log(this.detailReservation)
     this.reservationService.getReservations();
     this.getResrvations();
+    this.getClients()
+    this.getVoitures()
       this.getImage();
   }
   getResrvations() {
     this.reservationsSubscription = this.reservationService.reservationsSubject.subscribe(
-      (reservations: Reservation[]) => {
+      (reservations: Array<any>) => {
         this.reservations = reservations;
       }
     );
+  }
+
+  getClients() {
+    this.reservationService.clientsSubject.subscribe(
+      (clients: Array<any>) => {
+        this.clients = clients
+
+      }
+    )
+  }
+  getVoitures() {
+    this.reservationService.voituresSubject.subscribe(
+      (voitures: Array<any>) => {
+        this.voitures = voitures
+      }
+    )
   }
 
   getImage() {
     this.imageSubscription = this.imageService.imageSubject.subscribe(
       (image: Images) => {
         this.image = image
-        console.log('image')
-        console.log(this.image)
+
       }
     );
   }
   onClick(reservation) {
     this.detailReservation = reservation;
     this.cacheDetail = true;
-    this.imageService.getImages(this.detailReservation.voiture.id_voiture);
+      // a venir
+    // this.imageService.getImages(this.detailReservation.voiture.id_voiture);
   }
 
   ngOnDestroy() {

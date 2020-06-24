@@ -1,15 +1,13 @@
 <div class="header">
-  <nav style="text-align: center;" class="navbar navbar-expand-sm bg-dark navbar-dark" style="margin-bottom: 20px;">
-    <span id="bienvenu"> Bienvenue dans Location SALL&FRERE</span>
-    <div class="login row">
-      <div class="col-md-8">
-        <button pButton type="button" [class]="stile" [label]="connecter" [icon]="icon" (click)="showDialog = true"
-          [routerLink]="['/login']" routerLinkActive="router-link-active"></button>
-      </div>
-      <div class="">
-        <a style="color: white;" [routerLink]="['/login', inscrire]"
-          routerLinkActive="router-link-active">{{ inscription }}</a>
-      </div>
+  <div id="ctc">
+    <span class="ctc">Contactez-nous:<span class="fa fa-phone">&nbsp;+221 78 500 93 68 </span></span>
+    <span class="ctc"><a class="fa fa-envelope" href="mailto:moussa9594@gmail.com">&nbsp;moussa9594@gmail.com</a></span>
+  </div>
+  <nav class="navbar navbar-expand-sm bg-secondary navbar-secondary " style="margin-bottom:
+    20px;">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link " href="#"><span class="fa fa-car"></span>&nbsp;Home </a>
+      <a class="nav-item nav-link" href="#">A propos</a>
     </div>
   </nav>
 </div>

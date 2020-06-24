@@ -5,10 +5,6 @@
   width: 200px;
   float: left;
 }
-.modele{
-  margin-bottom: 2px;
-  width: 100px;
-}
 .car-title{
   font-weight: bold;
   font-size: 12px;
@@ -27,7 +23,7 @@
   padding:10px ;
 }
 .def{
-  background-color:dimgray;
+  background-color:white;
   padding: 20px;
 }
 .choix{
@@ -77,3 +73,13 @@
 .carousel-demo .ui-carousel.ui-carousel-horizontal .ui-carousel-content .ui-carousel-item .ui-carousel-item-end .car-details > .p-grid {
   margin-right: 0.6em;
 }
+
+ .ui-orderlist-controls {
+  display: none;
+}
+ .imTop{
+   border: 1px solid gray;
+   border-radius: 7px;
+   padding: 2px;
+
+ }

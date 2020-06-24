@@ -2,8 +2,10 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ServiceVoitureService } from 'src/app/voiture.service';
 import { VoitureIms } from 'src/app/models/voitureIms';
-import { Login } from 'src/app/models/login';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from 'src/app/admin.service';
+import { first } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-login',
@@ -15,36 +17,38 @@ export class LoginComponent implements OnInit, OnDestroy {
   listVoitures: VoitureIms[];
    @Input() showDialog: boolean;
   showLogin = true;
-    username =  'sall';
-    password =  'sall94';
+
     inscrire = '';
-    adminLogin: Login = new Login();
+
+    email: any;
+  returnUrl: any;
   constructor(
               private serviceVoiture: ServiceVoitureService,
-              private route: Router,
-              private activeRoutre: ActivatedRoute
-  ) { }
+              private adminService: AuthenticationService,
+              private route: ActivatedRoute,
+              private router: Router,
+  ) {
+    if (this.adminService.currentUserValue) {
+      // this.router.navigate(['/admin']);
+  }
+  }
 
   subscriptionVoitures: Subscription;
   ngOnInit() {
-      this.activeRoutre.paramMap.subscribe(param => {
+      this.route.paramMap.subscribe(param => {
         this.inscrire = param.get('inscrire');
       });
       if(this.inscrire) {
         this.showLogin = false;
       }
-
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
   }
 
-  onLogin() {
-    if ((this.adminLogin.username === this.username) &&
-     (this.adminLogin.password === this.password)) {
-        this.route.navigate(['/admin'])
-    } else {
-      alert('login ou mot de passe incorrect');
-    }
+  onSuccess(value: any){
+    this.adminService.login(value.email).subscribe(res =>{
+      this.router.navigate([this.returnUrl]);
+    })
   }
-
   ngOnDestroy() {
   }
 

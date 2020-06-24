@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Voiture } from 'src/app/models/voiture';
-import { ServiceVoitureService } from 'src/app/voiture.service';
-import { ImageService } from 'src/app/image.service';
-import { VoitureComponent} from '../listVoitures/listVoitures.component';
-import {SelectItem} from 'primeng/api';
-import {MessageService} from 'primeng/api';
-import { Images } from 'src/app/models/images';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService, SelectItem } from 'primeng/api';
+import { ImageService } from 'src/app/image.service';
+import { Images } from 'src/app/models/images';
+import { ServiceVoitureService } from 'src/app/voiture.service';
+import { Subscription } from 'rxjs';
+import { modeles } from 'src/app/models/modeles';
+import { VoitureIms } from 'src/app/models/voitureIms';
 
 @Component({
   selector: 'app-creer-voiture',
@@ -15,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./creer-voiture.component.css'],
   providers: [MessageService]
 })
-export class CreerVoitureComponent implements OnInit {
+export class CreerVoitureComponent implements OnInit, OnDestroy {
 
    marques: SelectItem[];
    modeles: SelectItem[];
@@ -29,9 +28,13 @@ export class CreerVoitureComponent implements OnInit {
   validForm = true;
   new = 'new'
   // Objet voiture pour le formulaire
-  newVoiture: Voiture = new Voiture();
+  newVoiture: VoitureIms = new VoitureIms();
   // Objet Images pour le formulaire
   newImages: Images = new Images();
+  carLastIdSubscription: Subscription;
+  modelesSubscription: Subscription;
+  lastId: number;
+  carLastId: any;
   constructor(private voitureService: ServiceVoitureService,
               private messageService: MessageService,
               private imageService: ImageService,
@@ -59,6 +62,7 @@ export class CreerVoitureComponent implements OnInit {
     this.modeles.push({label: 'Ford', value: 'Ford' });
     this.modeles.push({label: 'Hyundai', value: 'Hyundai' });
     this.modeles.push({label: 'Jaguar', value: 'Jaguar' });
+    this.modeles.push({label: 'Mercedes', value: 'Mercedes' });
     this.modeles.push({label: 'Autre', value: 'Autre' });
     // nbre_portes
     this.nbre_portes = [];
@@ -86,53 +90,44 @@ export class CreerVoitureComponent implements OnInit {
   onSelect(evt: any) {
     this.files = evt.currentFiles;
     if (this.files[0] !== undefined && this.files[1] !== undefined && this.files[2] === undefined) {
-      this.newImages.image1 = this.files[0].name;
-      this.newImages.image2 = this.files[1].name;
+      this.newImages.im1 = this.files[0].name;
+      this.newImages.im2 = this.files[1].name;
       this.messageService.add({severity: 'info', summary: 'La troisième image sera le logo', detail: ''});
     }
     if ( this.files[2] !== undefined) {
-      this.newImages.image3 = this.files[2].name;
+      this.newImages.im3 = this.files[2].name;
     }
   }
 
   // action quand on supprime une image
   onRemove(event) {
-      this.newImages.image3 = undefined;
+      this.newImages.im3 = undefined;
       this.onValidForm();
   }
 
+
+
   // methode de création de la voiture
   creerVoiture() {
-    this.voitureService.creerVoiture(this.newVoiture).pipe(
-      map(
-        (voiture: Voiture) =>
-          voiture
-        )
-    )
-    .subscribe(
-      (voiture: Voiture) => {
-        this.newImages.voiture = voiture;
-        this.creerImages();
+      this.voitureService.creerVoiture(this.newVoiture, this.newImages).then( res => {
+        // this.getDoc(res.path)
+        // this.router.navigate(['/admin', this.new])
+      } );
 
-      },
-          );
-            }
-  // methode de création des images
-  creerImages() {
-    this.imageService.creerImages(this.newImages)
-    .subscribe(data => console.log(data), error => console.log(error));
-  }
+    }
+
+
 
   // A la validation du formulaire d'jout de Voiture
   onSubmit() {
-      this.creerVoiture();
+       this.creerVoiture();
+      // this.getCarLastId();
       this.cache = true;
-      this.router.navigate(['/admin', this.new]);
   }
   onValidForm(): boolean {
       if (this.newVoiture.marque == null || this.newVoiture.model == null || this.newVoiture.nbre_porte == null ||
         this.newVoiture.prix_jour == null || this.newVoiture.description === undefined ||
-         this.newImages.image3 === undefined || this.newVoiture.stock == null ) {
+         this.newImages.im3 === undefined || this.newVoiture.stock == null ) {
        return true;
       } else {
         return false;
@@ -144,7 +139,10 @@ export class CreerVoitureComponent implements OnInit {
     this.cache = false;
   }
 
+  ngOnDestroy() {
+    if(this.carLastIdSubscription){
+      this.carLastIdSubscription.unsubscribe()
+    }
 
-
-
+  }
 }

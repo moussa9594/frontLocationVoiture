@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthenticationService } from '../admin.service';
 
 @Component({
   selector: 'app-header',
@@ -8,16 +9,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  inscrire = 'inscrire';
-  @Input() connecter;
-  @Input() icon;
-  @Input() inscription;
-  @Input() stile;
 
-  constructor(private activeRoute: ActivatedRoute) { }
+  constructor() { }
 
   ngOnInit() {
 
   }
+
+
 
 }

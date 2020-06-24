@@ -1,10 +1,12 @@
-<div class="connecter" [hidden]="!showLogin">
+<!-- <div class="connecter" [hidden]="!showLogin">
   <form (ngSubmit)="onLogin()">
     <div class="ui-g ui-fluid">
       <div class="p-col p-col-align-center">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-user" style="line-height: 1.25;"></i></span>
-          <input  class="ipt" [(ngModel)]="adminLogin.username" name="username" id="username" type="text" pInputText
+          <span class="ui-inputgroup-addon"><i class="pi pi-user"
+              style="line-height: 1.25;"></i></span>
+          <input class="ipt" [(ngModel)]="username" name="username"
+            id="username" type="text" pInputText
             placeholder="Login ou email">
         </div>
       </div>
@@ -12,8 +14,10 @@
     <div class="ui-g ui-fluid">
       <div class="p-col p-col-align-center">
         <div class="ui-inputgroup">
-          <span class="ui-inputgroup-addon"><i class="pi pi-key" style="line-height: 1.25;"></i></span>
-          <input class="ipt" [(ngModel)]="adminLogin.password" name="password" id="password" type="password" pInputText
+          <span class="ui-inputgroup-addon"><i class="pi pi-key"
+              style="line-height: 1.25;"></i></span>
+          <input class="ipt" [(ngModel)]="password" name="password"
+            id="password" type="password" pInputText
             placeholder="mot de passe">
         </div>
       </div>
@@ -21,9 +25,33 @@
     <div class="ui-g ui-fluid">
       <div class="p-col p-col-align-center">
         <div class="ui-inputgroup">
-          <button pButton type="submit" label="Connexion" class="ui-button-rounded"></button>
+          <button pButton type="submit" label="Connexion"
+            class="ui-button-rounded"></button>
         </div>
       </div>
     </div>
   </form>
+</div> -->
+
+<!-- <form>
+  <mat-form-field>
+    <input matInput matNativeControl placeholder="username" name="username"
+      [(ngModel)]="username">
+  </mat-form-field>
+  <mat-form-field>
+    <input type="password" matNativeControl placeholder="password" name="password"
+      [(ngModel)]="password">
+  </mat-form-field>s
+  <div class="button-rom" style="margin-left: 10px;">
+    <button mat-raised-button color="primary">Submit</button>
+  </div>
+</form> -->
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-6">
+    <ngx-auth-firebaseui-login
+    (onSuccess)="onSuccess($event)"
+    ></ngx-auth-firebaseui-login>
+  </div>
+  <div class="col-lg-3"></div>
 </div>

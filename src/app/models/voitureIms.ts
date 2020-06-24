@@ -1,6 +1,5 @@
 export class VoitureIms {
 
-  id_voiture: number;
   model: string;
   marque: string;
   nbre_porte: number;
@@ -8,8 +7,9 @@ export class VoitureIms {
   prix_jour: number;
   disponibilite: boolean;
   stock: number;
-  chauffeur: boolean;
-  image1: string;
-  image2: string;
-  image3: string;
+  images: {
+    im1: string,
+    im2: string,
+    im3: string,
+  }
 }

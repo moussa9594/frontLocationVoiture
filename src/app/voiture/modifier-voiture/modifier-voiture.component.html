@@ -71,17 +71,17 @@
         </div>
       </div>
       <div [hidden]="showImages" class="ui-grid-row">
-        <span class="ims"> <img class="im" src="../../../assets/{{ modifierVoiture.image1 }}" alt="image1" > <br>
+        <span class="ims"> <img class="im" src="../../../assets/{{ modifierVoiture.images.im1 }}" alt="image1" > <br>
           <p-fileUpload name="image1"  (onSelect)="onSelectIm1($event)" chooseLabel="Image 1"
            accept="image/*" maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false" >
           </p-fileUpload>
          </span>
-        <span class="ims"> <img class="im" src="../../../assets/{{ modifierVoiture.image2 }}" alt="image2" ><br>
+        <span class="ims"> <img class="im" src="../../../assets/{{ modifierVoiture.images.im2 }}" alt="image2" ><br>
           <p-fileUpload name="image2"  (onSelect)="onSelectIm2($event)" chooseLabel="Image 2"
            accept="image/*" maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false">
           </p-fileUpload>
         </span>
-        <span class="ims"> <img class="im" src="../../../assets/logos/{{ modifierVoiture.image3 }}" alt="image3" ><br>
+        <span class="ims"> <img class="im" src="../../../assets/logos/{{ modifierVoiture.images.im3 }}" alt="image3" ><br>
           <p-fileUpload name="image3"  (onSelect)="onSelectIm3($event)" chooseLabel="Logo"
            accept="image/*" maxFileSize="1000000" [showCancelButton]="false" [showUploadButton]="false">
           </p-fileUpload>
